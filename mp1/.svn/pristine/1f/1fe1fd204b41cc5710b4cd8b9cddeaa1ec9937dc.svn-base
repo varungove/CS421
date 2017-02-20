@@ -1,0 +1,50 @@
+let rubric_version = "1.0"
+let rubric_title = "CS421 Fall 2016 MP1"
+(**************************************************************************
+ * You can add new test cases by adding new elements to the following lists
+ * Format is:
+ * TEST<X>ARG(<weight>, <function_name>, <arg1>, <arg2>, ..., <argX>)
+ *
+ * <X> is the number of argument that the function being tested takes.
+ **************************************************************************)
+
+
+
+(* This list is for regular problems *)
+let rubric =
+[
+    TEST2ARG(1, closer_to_origin, (2., 0.), (0., -1.));
+
+    TEST2ARG(1, ackermann, 3, 4);
+
+    TEST1ARG(1, collatz, 27);
+
+    TEST1ARG(1, delannoy, (3, 3));
+
+    TEST2ARG(1, two_funs, (not, abs), (true, -5));
+    TEST2ARG(1, two_funs, ((fun (x, y) -> x + y), (fun (s, t) -> s ^ t)), ((3, 4), ("H", "i")));
+
+    TEST1ARG(1, product, [2.; 3.; 4.]);
+
+    TEST1ARG(1, double_all, [1.5; -3.0; 0.; 2.2]);
+
+    TEST1ARG(1, upto, 8);
+
+    TEST1ARG(1, upuntil, (fun n -> n * n > 200));
+
+    TEST2ARG(1, pair_with_all, 1, ["a"; "b"; "c"]);
+    TEST2ARG(1, pair_with_all, true, [1; 2]);
+
+    TEST2ARG(1, cross, [1; 2; 3], ["b"; "a"]);
+    TEST2ARG(1, cross, [true; false; true], [2.; 3.; 1.]);
+
+    TEST3ARG(1, insert_by, (Pervasives.compare), 3, [1; 2; 4]);
+    TEST3ARG(1, insert_by, (fun s t -> Pervasives.compare t s), "y", ["z"; "x"])
+]
+(* Note: the last entry should not be followed by a semicolon. *)
+
+let extra_rubric = 
+[
+    TEST1ARG(1, collect_adjacent, [(1, "a"); (1, "d"); (1, "b"); (0, "b"); (0, "z"); (1, "a"); (1, "z"); (3, "t")]);
+    TEST1ARG(1, collect_adjacent, [(true, 4.); (false, 4.); (false, 4.); (true, 4.)])
+]

@@ -1,0 +1,70 @@
+(* CS421 - Fall 2016
+ * ML1
+ *
+ * Please keep in mind that there may be more than one
+ * way to solve a problem.  You will want to change how a number of these start.
+ *)
+
+open Mp1common
+
+
+let random = 0  (* You want to change this *)
+
+let title = "";; (* You want to change this *)
+
+let greetings = "";; (* You want to change this *)
+
+let salute = "";; (* You want to change this *)
+
+let a = 0;; (* You want to change this *)
+
+let pi = 0.0 (* You want to change this *)
+
+let e = 0.0;; (* You want to change this *)
+
+let quarter = 0.0;; (* You want to change this *)
+
+let x = 0.0;; (* You want to change this *)
+
+let s = "";; (* You want to change this *)
+
+let myFirstFun n = raise (Failure "Function not implemented yet.")
+
+let firstFun n = raise (Failure "Function not implemented yet.")
+
+let square n = raise (Failure "Function not implemented yet.")
+
+let times_13 n = raise (Failure "Function not implemented yet.")
+
+let add_a n = raise (Failure "Function not implemented yet.")
+
+let circumference r = raise (Failure "Function not implemented yet.")
+
+let divide_e_by x = raise (Failure "Function not implemented yet.")
+
+let plus_quarter_times_3 y = raise (Failure "Function not implemented yet.")
+
+let square_plus_x y = raise (Failure "Function not implemented yet.")
+
+let double_minus_one x = raise (Failure "Function not implemented yet.")
+
+let diff_square_9 m = raise (Failure "Function not implemented yet.")
+
+let salutations name =  raise (Failure "Function not implemented yet.")
+
+let hail name = raise (Failure "Function not implemented yet.")
+
+let abs_diff x y =  raise (Failure "Function not implemented yet.")
+
+let greet name = raise (Failure "Function not implemented yet.")
+
+let make_bigger x = raise (Failure "Function not implemented yet.")
+
+let dist_double s n = raise (Failure "Function not implemented yet.")
+
+let has_smallest_square m n = raise (Failure "Function not implemented yet.")
+
+let has_smallest_abs m n =  raise (Failure "Function not implemented yet.")
+
+let sign n = raise (Failure "Function not implemented yet.")
+

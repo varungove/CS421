@@ -1,0 +1,89 @@
+(**************************************************************************
+ * You can add new test cases by adding new elements to the following lists
+ * Format is:
+ * TEST<X>ARG(<weight>, <function_name>, <arg1>, <arg2>, ..., <argX>)
+ *
+ * <X> is the number of argument that the function being tested takes.
+ **************************************************************************)
+
+(* This list is for regular problems *)
+let rubric =
+[
+(* 1 *)
+     TEST0ARG(1, random) ;
+     TEST0ARG(1, title) ;
+     TEST0ARG(1, greetings) ;
+     TEST0ARG(1, salute) ;
+     TEST0ARG(1, a) ;
+(* 2 *)
+     TEST0ARG(1, pi) ;
+     TEST0ARG(1, e) ;
+     TEST0ARG(1, quarter) ;
+     TEST0ARG(1, x) ;
+     TEST0ARG(1, s) ;
+(* 3 *)
+     TEST1ARG(1, myFirstFun, 17) ;
+     TEST1ARG(1, myFirstFun, (-1)) ;
+     TEST1ARG(1, firstFun, 12) ;
+     TEST1ARG(1, firstFun, 76);
+     TEST1ARG(1, square, 7) ;
+     TEST1ARG(1, square, (~-1)) ;
+     TEST1ARG(1, times_13, 7) ;
+     TEST1ARG(1, times_13, (-2)) ;
+     TEST1ARG(1, add_a, 13) ;
+     TEST1ARG(1, add_a, (-17)) ;
+(* 4 *)
+     TEST1ARG(1, circumference, 1.0) ; 
+     TEST1ARG(1, circumference, 0.1) ; 
+     TEST1ARG(1, divide_e_by, Solution.e) ; 
+     TEST1ARG(1, divide_e_by, 1.5);
+     TEST1ARG(1, plus_quarter_times_3, 23.5) ; 
+     TEST1ARG(1, plus_quarter_times_3, ~-.1.0);
+     TEST1ARG(1, square_plus_x, 23.17) ; 
+     TEST1ARG(1, square_plus_x, 0.0) ; 
+     TEST1ARG(1, double_minus_one, 1) ;
+     TEST1ARG(1, double_minus_one, 5) ;
+(* 5 *)
+
+     TEST1ARG(1, diff_square_9, 5) ;
+     TEST1ARG(1, diff_square_9, (-2));
+     TEST1ARG(1, diff_square_9, (-4));
+     TEST1ARG(1, salutations, "Malisa") ;
+     TEST1ARG(1, salutations, "Elsa") ;
+     TEST1ARG(1, salutations, "") ;
+     TEST1ARG(1, hail, "Thomas") ;
+     TEST1ARG(1, hail, "Elsa") ;
+     TEST1ARG(1, hail, "") ; 
+     TEST2ARG(1, abs_diff, 15.0, 11.5) ;
+     TEST2ARG(1, abs_diff, (-15.0), 11.5) ;
+     TEST2ARG(1, abs_diff, 0.0, 0.0) ;
+     TEST1ARG(1, greet, "Angela") ;
+     TEST1ARG(1, greet, "Elsa") ;
+     TEST1ARG(1, greet, "") ;
+(* 6 *)
+     TEST1ARG(1, make_bigger, 12.0);
+     TEST1ARG(1, make_bigger, (-1.5));
+     TEST1ARG(1, make_bigger, 0.0);
+(*
+     TEST1ARG(1, make_bigger, 0.7);
+     TEST1ARG(1, make_bigger, 1.0);
+*)
+     TEST2ARG(1, dist_double, "Well, Sam", 8);
+     TEST2ARG(1, dist_double, "Hey, what's up", (-2));
+     TEST2ARG(1, dist_double, "", 0);
+     TEST2ARG(1, has_smallest_square, 4, 6) ;
+(*     TEST2ARG(1, has_smallest_square, (~-1), 1) ;*)
+     TEST2ARG(1, has_smallest_square, 1, (~-1)) ;
+     TEST2ARG(1, has_smallest_square, (~-2), (~-1)) ;
+     TEST2ARG(1, has_smallest_abs, 6, 4) ;
+     TEST2ARG(1, has_smallest_abs, 5, (-5)) ;
+     TEST2ARG(1, has_smallest_abs, (-3), 3) ;
+(*     TEST2ARG(1, has_smallest_abs, 6, 4) ;*)
+     TEST1ARG(1, sign, 4) ;
+     TEST1ARG(1, sign, 0) ;
+     TEST1ARG(1, sign, (-1)) 
+]
+(* Note: the last entry should not be followed by a semicolon. *)
+
+(* This is the list for extra credit problems *)
+let extra_rubric = [ ]

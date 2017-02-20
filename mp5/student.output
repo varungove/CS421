@@ -1,0 +1,4463 @@
+   0  $accept : %entry% $end
+
+   1  main : expression DSEMI
+   2       | LET IDENT EQUALS expression DSEMI
+   3       | LET REC IDENT IDENT EQUALS expression DSEMI
+
+   4  expression : atomic_expression
+   5             | LPAREN expression RPAREN
+   6             | LPAREN expression COMMA expression RPAREN
+   7             | NEG expression
+   8             | HEAD expression
+   9             | TAIL expression
+  10             | FST expression
+  11             | SND expression
+  12             | expression PLUS expression
+  13             | expression MINUS expression
+  14             | expression DIV expression
+  15             | expression TIMES expression
+  16             | expression DPLUS expression
+  17             | expression DMINUS expression
+  18             | expression DDIV expression
+  19             | expression DTIMES expression
+  20             | expression LT expression
+  21             | expression GT expression
+  22             | expression EQUALS expression
+  23             | expression LEQ expression
+  24             | expression GEQ expression
+  25             | expression DCOLON expression
+  26             | LET IDENT EQUALS expression IN expression
+  27             | LET REC IDENT IDENT EQUALS expression IN expression
+  28             | expression expression
+  29             | expression LOGICALAND expression
+  30             | expression LOGICALOR expression
+  31             | FUN IDENT ARROW expression
+  32             | IF expression THEN expression ELSE expression
+  33             | RAISE expression
+
+  34  pat : UNDERSCORE
+  35      | INT
+
+  36  atomic_expression : IDENT
+  37                    | INT
+  38                    | FLOAT
+  39                    | STRING
+  40                    | UNIT
+  41                    | TRUE
+  42                    | FALSE
+  43                    | NIL
+
+  44  %entry% : '\001' main
+
+state 0
+	$accept : . %entry% $end  (0)
+
+	'\001'  shift 1
+	.  error
+
+	%entry%  goto 2
+
+
+state 1
+	%entry% : '\001' . main  (44)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 11
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	main  goto 21
+	expression  goto 22
+	atomic_expression  goto 23
+
+
+state 2
+	$accept : %entry% . $end  (0)
+
+	$end  accept
+
+
+state 3
+	atomic_expression : INT .  (37)
+
+	.  reduce 37
+
+
+state 4
+	atomic_expression : FLOAT .  (38)
+
+	.  reduce 38
+
+
+state 5
+	atomic_expression : STRING .  (39)
+
+	.  reduce 39
+
+
+state 6
+	atomic_expression : IDENT .  (36)
+
+	.  reduce 36
+
+
+state 7
+	atomic_expression : TRUE .  (41)
+
+	.  reduce 41
+
+
+state 8
+	atomic_expression : FALSE .  (42)
+
+	.  reduce 42
+
+
+state 9
+	expression : NEG . expression  (7)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 25
+	atomic_expression  goto 23
+
+
+state 10
+	atomic_expression : NIL .  (43)
+
+	.  reduce 43
+
+
+state 11
+	main : LET . IDENT EQUALS expression DSEMI  (2)
+	main : LET . REC IDENT IDENT EQUALS expression DSEMI  (3)
+	expression : LET . IDENT EQUALS expression IN expression  (26)
+	expression : LET . REC IDENT IDENT EQUALS expression IN expression  (27)
+
+	IDENT  shift 26
+	REC  shift 27
+	.  error
+
+
+state 12
+	expression : IF . expression THEN expression ELSE expression  (32)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 28
+	atomic_expression  goto 23
+
+
+state 13
+	expression : FUN . IDENT ARROW expression  (31)
+
+	IDENT  shift 29
+	.  error
+
+
+state 14
+	expression : RAISE . expression  (33)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 30
+	atomic_expression  goto 23
+
+
+state 15
+	expression : LPAREN . expression RPAREN  (5)
+	expression : LPAREN . expression COMMA expression RPAREN  (6)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 31
+	atomic_expression  goto 23
+
+
+state 16
+	atomic_expression : UNIT .  (40)
+
+	.  reduce 40
+
+
+state 17
+	expression : HEAD . expression  (8)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 32
+	atomic_expression  goto 23
+
+
+state 18
+	expression : TAIL . expression  (9)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 33
+	atomic_expression  goto 23
+
+
+state 19
+	expression : FST . expression  (10)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 34
+	atomic_expression  goto 23
+
+
+state 20
+	expression : SND . expression  (11)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 35
+	atomic_expression  goto 23
+
+
+state 21
+	%entry% : '\001' main .  (44)
+
+	.  reduce 44
+
+
+state 22
+	main : expression . DSEMI  (1)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DSEMI  shift 49
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 23
+	expression : atomic_expression .  (4)
+
+	.  reduce 4
+
+
+state 24
+	expression : LET . IDENT EQUALS expression IN expression  (26)
+	expression : LET . REC IDENT IDENT EQUALS expression IN expression  (27)
+
+	IDENT  shift 54
+	REC  shift 55
+	.  error
+
+
+25: shift/reduce conflict (shift 3, reduce 7) on INT
+25: shift/reduce conflict (shift 4, reduce 7) on FLOAT
+25: shift/reduce conflict (shift 5, reduce 7) on STRING
+25: shift/reduce conflict (shift 6, reduce 7) on IDENT
+25: shift/reduce conflict (shift 7, reduce 7) on TRUE
+25: shift/reduce conflict (shift 8, reduce 7) on FALSE
+25: shift/reduce conflict (shift 9, reduce 7) on NEG
+25: shift/reduce conflict (shift 36, reduce 7) on PLUS
+25: shift/reduce conflict (shift 37, reduce 7) on MINUS
+25: shift/reduce conflict (shift 38, reduce 7) on TIMES
+25: shift/reduce conflict (shift 39, reduce 7) on DIV
+25: shift/reduce conflict (shift 40, reduce 7) on DPLUS
+25: shift/reduce conflict (shift 41, reduce 7) on DMINUS
+25: shift/reduce conflict (shift 42, reduce 7) on DTIMES
+25: shift/reduce conflict (shift 43, reduce 7) on DDIV
+25: shift/reduce conflict (shift 44, reduce 7) on LT
+25: shift/reduce conflict (shift 45, reduce 7) on GT
+25: shift/reduce conflict (shift 46, reduce 7) on LEQ
+25: shift/reduce conflict (shift 47, reduce 7) on GEQ
+25: shift/reduce conflict (shift 48, reduce 7) on EQUALS
+25: shift/reduce conflict (shift 50, reduce 7) on DCOLON
+25: shift/reduce conflict (shift 10, reduce 7) on NIL
+25: shift/reduce conflict (shift 24, reduce 7) on LET
+25: shift/reduce conflict (shift 12, reduce 7) on IF
+25: shift/reduce conflict (shift 13, reduce 7) on FUN
+25: shift/reduce conflict (shift 14, reduce 7) on RAISE
+25: shift/reduce conflict (shift 51, reduce 7) on LOGICALAND
+25: shift/reduce conflict (shift 52, reduce 7) on LOGICALOR
+25: shift/reduce conflict (shift 15, reduce 7) on LPAREN
+25: shift/reduce conflict (shift 16, reduce 7) on UNIT
+25: shift/reduce conflict (shift 17, reduce 7) on HEAD
+25: shift/reduce conflict (shift 18, reduce 7) on TAIL
+25: shift/reduce conflict (shift 19, reduce 7) on FST
+25: shift/reduce conflict (shift 20, reduce 7) on SND
+state 25
+	expression : NEG expression .  (7)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 7
+	IN  reduce 7
+	THEN  reduce 7
+	ELSE  reduce 7
+	RPAREN  reduce 7
+	COMMA  reduce 7
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 26
+	main : LET IDENT . EQUALS expression DSEMI  (2)
+	expression : LET IDENT . EQUALS expression IN expression  (26)
+
+	EQUALS  shift 56
+	.  error
+
+
+state 27
+	main : LET REC . IDENT IDENT EQUALS expression DSEMI  (3)
+	expression : LET REC . IDENT IDENT EQUALS expression IN expression  (27)
+
+	IDENT  shift 57
+	.  error
+
+
+state 28
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+	expression : IF expression . THEN expression ELSE expression  (32)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	THEN  shift 58
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 29
+	expression : FUN IDENT . ARROW expression  (31)
+
+	ARROW  shift 59
+	.  error
+
+
+30: shift/reduce conflict (shift 3, reduce 33) on INT
+30: shift/reduce conflict (shift 4, reduce 33) on FLOAT
+30: shift/reduce conflict (shift 5, reduce 33) on STRING
+30: shift/reduce conflict (shift 6, reduce 33) on IDENT
+30: shift/reduce conflict (shift 7, reduce 33) on TRUE
+30: shift/reduce conflict (shift 8, reduce 33) on FALSE
+30: shift/reduce conflict (shift 9, reduce 33) on NEG
+30: shift/reduce conflict (shift 36, reduce 33) on PLUS
+30: shift/reduce conflict (shift 37, reduce 33) on MINUS
+30: shift/reduce conflict (shift 38, reduce 33) on TIMES
+30: shift/reduce conflict (shift 39, reduce 33) on DIV
+30: shift/reduce conflict (shift 40, reduce 33) on DPLUS
+30: shift/reduce conflict (shift 41, reduce 33) on DMINUS
+30: shift/reduce conflict (shift 42, reduce 33) on DTIMES
+30: shift/reduce conflict (shift 43, reduce 33) on DDIV
+30: shift/reduce conflict (shift 44, reduce 33) on LT
+30: shift/reduce conflict (shift 45, reduce 33) on GT
+30: shift/reduce conflict (shift 46, reduce 33) on LEQ
+30: shift/reduce conflict (shift 47, reduce 33) on GEQ
+30: shift/reduce conflict (shift 48, reduce 33) on EQUALS
+30: shift/reduce conflict (shift 50, reduce 33) on DCOLON
+30: shift/reduce conflict (shift 10, reduce 33) on NIL
+30: shift/reduce conflict (shift 24, reduce 33) on LET
+30: shift/reduce conflict (shift 12, reduce 33) on IF
+30: shift/reduce conflict (shift 13, reduce 33) on FUN
+30: shift/reduce conflict (shift 14, reduce 33) on RAISE
+30: shift/reduce conflict (shift 51, reduce 33) on LOGICALAND
+30: shift/reduce conflict (shift 52, reduce 33) on LOGICALOR
+30: shift/reduce conflict (shift 15, reduce 33) on LPAREN
+30: shift/reduce conflict (shift 16, reduce 33) on UNIT
+30: shift/reduce conflict (shift 17, reduce 33) on HEAD
+30: shift/reduce conflict (shift 18, reduce 33) on TAIL
+30: shift/reduce conflict (shift 19, reduce 33) on FST
+30: shift/reduce conflict (shift 20, reduce 33) on SND
+state 30
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+	expression : RAISE expression .  (33)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 33
+	IN  reduce 33
+	THEN  reduce 33
+	ELSE  reduce 33
+	RPAREN  reduce 33
+	COMMA  reduce 33
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 31
+	expression : LPAREN expression . RPAREN  (5)
+	expression : LPAREN expression . COMMA expression RPAREN  (6)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	RPAREN  shift 60
+	COMMA  shift 61
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+32: shift/reduce conflict (shift 3, reduce 8) on INT
+32: shift/reduce conflict (shift 4, reduce 8) on FLOAT
+32: shift/reduce conflict (shift 5, reduce 8) on STRING
+32: shift/reduce conflict (shift 6, reduce 8) on IDENT
+32: shift/reduce conflict (shift 7, reduce 8) on TRUE
+32: shift/reduce conflict (shift 8, reduce 8) on FALSE
+32: shift/reduce conflict (shift 9, reduce 8) on NEG
+32: shift/reduce conflict (shift 36, reduce 8) on PLUS
+32: shift/reduce conflict (shift 37, reduce 8) on MINUS
+32: shift/reduce conflict (shift 38, reduce 8) on TIMES
+32: shift/reduce conflict (shift 39, reduce 8) on DIV
+32: shift/reduce conflict (shift 40, reduce 8) on DPLUS
+32: shift/reduce conflict (shift 41, reduce 8) on DMINUS
+32: shift/reduce conflict (shift 42, reduce 8) on DTIMES
+32: shift/reduce conflict (shift 43, reduce 8) on DDIV
+32: shift/reduce conflict (shift 44, reduce 8) on LT
+32: shift/reduce conflict (shift 45, reduce 8) on GT
+32: shift/reduce conflict (shift 46, reduce 8) on LEQ
+32: shift/reduce conflict (shift 47, reduce 8) on GEQ
+32: shift/reduce conflict (shift 48, reduce 8) on EQUALS
+32: shift/reduce conflict (shift 50, reduce 8) on DCOLON
+32: shift/reduce conflict (shift 10, reduce 8) on NIL
+32: shift/reduce conflict (shift 24, reduce 8) on LET
+32: shift/reduce conflict (shift 12, reduce 8) on IF
+32: shift/reduce conflict (shift 13, reduce 8) on FUN
+32: shift/reduce conflict (shift 14, reduce 8) on RAISE
+32: shift/reduce conflict (shift 51, reduce 8) on LOGICALAND
+32: shift/reduce conflict (shift 52, reduce 8) on LOGICALOR
+32: shift/reduce conflict (shift 15, reduce 8) on LPAREN
+32: shift/reduce conflict (shift 16, reduce 8) on UNIT
+32: shift/reduce conflict (shift 17, reduce 8) on HEAD
+32: shift/reduce conflict (shift 18, reduce 8) on TAIL
+32: shift/reduce conflict (shift 19, reduce 8) on FST
+32: shift/reduce conflict (shift 20, reduce 8) on SND
+state 32
+	expression : HEAD expression .  (8)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 8
+	IN  reduce 8
+	THEN  reduce 8
+	ELSE  reduce 8
+	RPAREN  reduce 8
+	COMMA  reduce 8
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+33: shift/reduce conflict (shift 3, reduce 9) on INT
+33: shift/reduce conflict (shift 4, reduce 9) on FLOAT
+33: shift/reduce conflict (shift 5, reduce 9) on STRING
+33: shift/reduce conflict (shift 6, reduce 9) on IDENT
+33: shift/reduce conflict (shift 7, reduce 9) on TRUE
+33: shift/reduce conflict (shift 8, reduce 9) on FALSE
+33: shift/reduce conflict (shift 9, reduce 9) on NEG
+33: shift/reduce conflict (shift 36, reduce 9) on PLUS
+33: shift/reduce conflict (shift 37, reduce 9) on MINUS
+33: shift/reduce conflict (shift 38, reduce 9) on TIMES
+33: shift/reduce conflict (shift 39, reduce 9) on DIV
+33: shift/reduce conflict (shift 40, reduce 9) on DPLUS
+33: shift/reduce conflict (shift 41, reduce 9) on DMINUS
+33: shift/reduce conflict (shift 42, reduce 9) on DTIMES
+33: shift/reduce conflict (shift 43, reduce 9) on DDIV
+33: shift/reduce conflict (shift 44, reduce 9) on LT
+33: shift/reduce conflict (shift 45, reduce 9) on GT
+33: shift/reduce conflict (shift 46, reduce 9) on LEQ
+33: shift/reduce conflict (shift 47, reduce 9) on GEQ
+33: shift/reduce conflict (shift 48, reduce 9) on EQUALS
+33: shift/reduce conflict (shift 50, reduce 9) on DCOLON
+33: shift/reduce conflict (shift 10, reduce 9) on NIL
+33: shift/reduce conflict (shift 24, reduce 9) on LET
+33: shift/reduce conflict (shift 12, reduce 9) on IF
+33: shift/reduce conflict (shift 13, reduce 9) on FUN
+33: shift/reduce conflict (shift 14, reduce 9) on RAISE
+33: shift/reduce conflict (shift 51, reduce 9) on LOGICALAND
+33: shift/reduce conflict (shift 52, reduce 9) on LOGICALOR
+33: shift/reduce conflict (shift 15, reduce 9) on LPAREN
+33: shift/reduce conflict (shift 16, reduce 9) on UNIT
+33: shift/reduce conflict (shift 17, reduce 9) on HEAD
+33: shift/reduce conflict (shift 18, reduce 9) on TAIL
+33: shift/reduce conflict (shift 19, reduce 9) on FST
+33: shift/reduce conflict (shift 20, reduce 9) on SND
+state 33
+	expression : TAIL expression .  (9)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 9
+	IN  reduce 9
+	THEN  reduce 9
+	ELSE  reduce 9
+	RPAREN  reduce 9
+	COMMA  reduce 9
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+34: shift/reduce conflict (shift 3, reduce 10) on INT
+34: shift/reduce conflict (shift 4, reduce 10) on FLOAT
+34: shift/reduce conflict (shift 5, reduce 10) on STRING
+34: shift/reduce conflict (shift 6, reduce 10) on IDENT
+34: shift/reduce conflict (shift 7, reduce 10) on TRUE
+34: shift/reduce conflict (shift 8, reduce 10) on FALSE
+34: shift/reduce conflict (shift 9, reduce 10) on NEG
+34: shift/reduce conflict (shift 36, reduce 10) on PLUS
+34: shift/reduce conflict (shift 37, reduce 10) on MINUS
+34: shift/reduce conflict (shift 38, reduce 10) on TIMES
+34: shift/reduce conflict (shift 39, reduce 10) on DIV
+34: shift/reduce conflict (shift 40, reduce 10) on DPLUS
+34: shift/reduce conflict (shift 41, reduce 10) on DMINUS
+34: shift/reduce conflict (shift 42, reduce 10) on DTIMES
+34: shift/reduce conflict (shift 43, reduce 10) on DDIV
+34: shift/reduce conflict (shift 44, reduce 10) on LT
+34: shift/reduce conflict (shift 45, reduce 10) on GT
+34: shift/reduce conflict (shift 46, reduce 10) on LEQ
+34: shift/reduce conflict (shift 47, reduce 10) on GEQ
+34: shift/reduce conflict (shift 48, reduce 10) on EQUALS
+34: shift/reduce conflict (shift 50, reduce 10) on DCOLON
+34: shift/reduce conflict (shift 10, reduce 10) on NIL
+34: shift/reduce conflict (shift 24, reduce 10) on LET
+34: shift/reduce conflict (shift 12, reduce 10) on IF
+34: shift/reduce conflict (shift 13, reduce 10) on FUN
+34: shift/reduce conflict (shift 14, reduce 10) on RAISE
+34: shift/reduce conflict (shift 51, reduce 10) on LOGICALAND
+34: shift/reduce conflict (shift 52, reduce 10) on LOGICALOR
+34: shift/reduce conflict (shift 15, reduce 10) on LPAREN
+34: shift/reduce conflict (shift 16, reduce 10) on UNIT
+34: shift/reduce conflict (shift 17, reduce 10) on HEAD
+34: shift/reduce conflict (shift 18, reduce 10) on TAIL
+34: shift/reduce conflict (shift 19, reduce 10) on FST
+34: shift/reduce conflict (shift 20, reduce 10) on SND
+state 34
+	expression : FST expression .  (10)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 10
+	IN  reduce 10
+	THEN  reduce 10
+	ELSE  reduce 10
+	RPAREN  reduce 10
+	COMMA  reduce 10
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+35: shift/reduce conflict (shift 3, reduce 11) on INT
+35: shift/reduce conflict (shift 4, reduce 11) on FLOAT
+35: shift/reduce conflict (shift 5, reduce 11) on STRING
+35: shift/reduce conflict (shift 6, reduce 11) on IDENT
+35: shift/reduce conflict (shift 7, reduce 11) on TRUE
+35: shift/reduce conflict (shift 8, reduce 11) on FALSE
+35: shift/reduce conflict (shift 9, reduce 11) on NEG
+35: shift/reduce conflict (shift 36, reduce 11) on PLUS
+35: shift/reduce conflict (shift 37, reduce 11) on MINUS
+35: shift/reduce conflict (shift 38, reduce 11) on TIMES
+35: shift/reduce conflict (shift 39, reduce 11) on DIV
+35: shift/reduce conflict (shift 40, reduce 11) on DPLUS
+35: shift/reduce conflict (shift 41, reduce 11) on DMINUS
+35: shift/reduce conflict (shift 42, reduce 11) on DTIMES
+35: shift/reduce conflict (shift 43, reduce 11) on DDIV
+35: shift/reduce conflict (shift 44, reduce 11) on LT
+35: shift/reduce conflict (shift 45, reduce 11) on GT
+35: shift/reduce conflict (shift 46, reduce 11) on LEQ
+35: shift/reduce conflict (shift 47, reduce 11) on GEQ
+35: shift/reduce conflict (shift 48, reduce 11) on EQUALS
+35: shift/reduce conflict (shift 50, reduce 11) on DCOLON
+35: shift/reduce conflict (shift 10, reduce 11) on NIL
+35: shift/reduce conflict (shift 24, reduce 11) on LET
+35: shift/reduce conflict (shift 12, reduce 11) on IF
+35: shift/reduce conflict (shift 13, reduce 11) on FUN
+35: shift/reduce conflict (shift 14, reduce 11) on RAISE
+35: shift/reduce conflict (shift 51, reduce 11) on LOGICALAND
+35: shift/reduce conflict (shift 52, reduce 11) on LOGICALOR
+35: shift/reduce conflict (shift 15, reduce 11) on LPAREN
+35: shift/reduce conflict (shift 16, reduce 11) on UNIT
+35: shift/reduce conflict (shift 17, reduce 11) on HEAD
+35: shift/reduce conflict (shift 18, reduce 11) on TAIL
+35: shift/reduce conflict (shift 19, reduce 11) on FST
+35: shift/reduce conflict (shift 20, reduce 11) on SND
+state 35
+	expression : SND expression .  (11)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 11
+	IN  reduce 11
+	THEN  reduce 11
+	ELSE  reduce 11
+	RPAREN  reduce 11
+	COMMA  reduce 11
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 36
+	expression : expression PLUS . expression  (12)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 62
+	atomic_expression  goto 23
+
+
+state 37
+	expression : expression MINUS . expression  (13)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 63
+	atomic_expression  goto 23
+
+
+state 38
+	expression : expression TIMES . expression  (15)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 64
+	atomic_expression  goto 23
+
+
+state 39
+	expression : expression DIV . expression  (14)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 65
+	atomic_expression  goto 23
+
+
+state 40
+	expression : expression DPLUS . expression  (16)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 66
+	atomic_expression  goto 23
+
+
+state 41
+	expression : expression DMINUS . expression  (17)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 67
+	atomic_expression  goto 23
+
+
+state 42
+	expression : expression DTIMES . expression  (19)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 68
+	atomic_expression  goto 23
+
+
+state 43
+	expression : expression DDIV . expression  (18)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 69
+	atomic_expression  goto 23
+
+
+state 44
+	expression : expression LT . expression  (20)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 70
+	atomic_expression  goto 23
+
+
+state 45
+	expression : expression GT . expression  (21)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 71
+	atomic_expression  goto 23
+
+
+state 46
+	expression : expression LEQ . expression  (23)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 72
+	atomic_expression  goto 23
+
+
+state 47
+	expression : expression GEQ . expression  (24)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 73
+	atomic_expression  goto 23
+
+
+state 48
+	expression : expression EQUALS . expression  (22)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 74
+	atomic_expression  goto 23
+
+
+state 49
+	main : expression DSEMI .  (1)
+
+	.  reduce 1
+
+
+state 50
+	expression : expression DCOLON . expression  (25)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 75
+	atomic_expression  goto 23
+
+
+state 51
+	expression : expression LOGICALAND . expression  (29)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 76
+	atomic_expression  goto 23
+
+
+state 52
+	expression : expression LOGICALOR . expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 77
+	atomic_expression  goto 23
+
+
+53: shift/reduce conflict (shift 3, reduce 28) on INT
+53: shift/reduce conflict (shift 4, reduce 28) on FLOAT
+53: shift/reduce conflict (shift 5, reduce 28) on STRING
+53: shift/reduce conflict (shift 6, reduce 28) on IDENT
+53: shift/reduce conflict (shift 7, reduce 28) on TRUE
+53: shift/reduce conflict (shift 8, reduce 28) on FALSE
+53: shift/reduce conflict (shift 9, reduce 28) on NEG
+53: shift/reduce conflict (shift 36, reduce 28) on PLUS
+53: shift/reduce conflict (shift 37, reduce 28) on MINUS
+53: shift/reduce conflict (shift 38, reduce 28) on TIMES
+53: shift/reduce conflict (shift 39, reduce 28) on DIV
+53: shift/reduce conflict (shift 40, reduce 28) on DPLUS
+53: shift/reduce conflict (shift 41, reduce 28) on DMINUS
+53: shift/reduce conflict (shift 42, reduce 28) on DTIMES
+53: shift/reduce conflict (shift 43, reduce 28) on DDIV
+53: shift/reduce conflict (shift 44, reduce 28) on LT
+53: shift/reduce conflict (shift 45, reduce 28) on GT
+53: shift/reduce conflict (shift 46, reduce 28) on LEQ
+53: shift/reduce conflict (shift 47, reduce 28) on GEQ
+53: shift/reduce conflict (shift 48, reduce 28) on EQUALS
+53: shift/reduce conflict (shift 50, reduce 28) on DCOLON
+53: shift/reduce conflict (shift 10, reduce 28) on NIL
+53: shift/reduce conflict (shift 24, reduce 28) on LET
+53: shift/reduce conflict (shift 12, reduce 28) on IF
+53: shift/reduce conflict (shift 13, reduce 28) on FUN
+53: shift/reduce conflict (shift 14, reduce 28) on RAISE
+53: shift/reduce conflict (shift 51, reduce 28) on LOGICALAND
+53: shift/reduce conflict (shift 52, reduce 28) on LOGICALOR
+53: shift/reduce conflict (shift 15, reduce 28) on LPAREN
+53: shift/reduce conflict (shift 16, reduce 28) on UNIT
+53: shift/reduce conflict (shift 17, reduce 28) on HEAD
+53: shift/reduce conflict (shift 18, reduce 28) on TAIL
+53: shift/reduce conflict (shift 19, reduce 28) on FST
+53: shift/reduce conflict (shift 20, reduce 28) on SND
+state 53
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression expression .  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 28
+	IN  reduce 28
+	THEN  reduce 28
+	ELSE  reduce 28
+	RPAREN  reduce 28
+	COMMA  reduce 28
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 54
+	expression : LET IDENT . EQUALS expression IN expression  (26)
+
+	EQUALS  shift 78
+	.  error
+
+
+state 55
+	expression : LET REC . IDENT IDENT EQUALS expression IN expression  (27)
+
+	IDENT  shift 79
+	.  error
+
+
+state 56
+	main : LET IDENT EQUALS . expression DSEMI  (2)
+	expression : LET IDENT EQUALS . expression IN expression  (26)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 80
+	atomic_expression  goto 23
+
+
+state 57
+	main : LET REC IDENT . IDENT EQUALS expression DSEMI  (3)
+	expression : LET REC IDENT . IDENT EQUALS expression IN expression  (27)
+
+	IDENT  shift 81
+	.  error
+
+
+state 58
+	expression : IF expression THEN . expression ELSE expression  (32)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 82
+	atomic_expression  goto 23
+
+
+state 59
+	expression : FUN IDENT ARROW . expression  (31)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 83
+	atomic_expression  goto 23
+
+
+state 60
+	expression : LPAREN expression RPAREN .  (5)
+
+	.  reduce 5
+
+
+state 61
+	expression : LPAREN expression COMMA . expression RPAREN  (6)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 84
+	atomic_expression  goto 23
+
+
+62: shift/reduce conflict (shift 3, reduce 12) on INT
+62: shift/reduce conflict (shift 4, reduce 12) on FLOAT
+62: shift/reduce conflict (shift 5, reduce 12) on STRING
+62: shift/reduce conflict (shift 6, reduce 12) on IDENT
+62: shift/reduce conflict (shift 7, reduce 12) on TRUE
+62: shift/reduce conflict (shift 8, reduce 12) on FALSE
+62: shift/reduce conflict (shift 9, reduce 12) on NEG
+62: shift/reduce conflict (shift 36, reduce 12) on PLUS
+62: shift/reduce conflict (shift 37, reduce 12) on MINUS
+62: shift/reduce conflict (shift 38, reduce 12) on TIMES
+62: shift/reduce conflict (shift 39, reduce 12) on DIV
+62: shift/reduce conflict (shift 40, reduce 12) on DPLUS
+62: shift/reduce conflict (shift 41, reduce 12) on DMINUS
+62: shift/reduce conflict (shift 42, reduce 12) on DTIMES
+62: shift/reduce conflict (shift 43, reduce 12) on DDIV
+62: shift/reduce conflict (shift 44, reduce 12) on LT
+62: shift/reduce conflict (shift 45, reduce 12) on GT
+62: shift/reduce conflict (shift 46, reduce 12) on LEQ
+62: shift/reduce conflict (shift 47, reduce 12) on GEQ
+62: shift/reduce conflict (shift 48, reduce 12) on EQUALS
+62: shift/reduce conflict (shift 50, reduce 12) on DCOLON
+62: shift/reduce conflict (shift 10, reduce 12) on NIL
+62: shift/reduce conflict (shift 24, reduce 12) on LET
+62: shift/reduce conflict (shift 12, reduce 12) on IF
+62: shift/reduce conflict (shift 13, reduce 12) on FUN
+62: shift/reduce conflict (shift 14, reduce 12) on RAISE
+62: shift/reduce conflict (shift 51, reduce 12) on LOGICALAND
+62: shift/reduce conflict (shift 52, reduce 12) on LOGICALOR
+62: shift/reduce conflict (shift 15, reduce 12) on LPAREN
+62: shift/reduce conflict (shift 16, reduce 12) on UNIT
+62: shift/reduce conflict (shift 17, reduce 12) on HEAD
+62: shift/reduce conflict (shift 18, reduce 12) on TAIL
+62: shift/reduce conflict (shift 19, reduce 12) on FST
+62: shift/reduce conflict (shift 20, reduce 12) on SND
+state 62
+	expression : expression . PLUS expression  (12)
+	expression : expression PLUS expression .  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 12
+	IN  reduce 12
+	THEN  reduce 12
+	ELSE  reduce 12
+	RPAREN  reduce 12
+	COMMA  reduce 12
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+63: shift/reduce conflict (shift 3, reduce 13) on INT
+63: shift/reduce conflict (shift 4, reduce 13) on FLOAT
+63: shift/reduce conflict (shift 5, reduce 13) on STRING
+63: shift/reduce conflict (shift 6, reduce 13) on IDENT
+63: shift/reduce conflict (shift 7, reduce 13) on TRUE
+63: shift/reduce conflict (shift 8, reduce 13) on FALSE
+63: shift/reduce conflict (shift 9, reduce 13) on NEG
+63: shift/reduce conflict (shift 36, reduce 13) on PLUS
+63: shift/reduce conflict (shift 37, reduce 13) on MINUS
+63: shift/reduce conflict (shift 38, reduce 13) on TIMES
+63: shift/reduce conflict (shift 39, reduce 13) on DIV
+63: shift/reduce conflict (shift 40, reduce 13) on DPLUS
+63: shift/reduce conflict (shift 41, reduce 13) on DMINUS
+63: shift/reduce conflict (shift 42, reduce 13) on DTIMES
+63: shift/reduce conflict (shift 43, reduce 13) on DDIV
+63: shift/reduce conflict (shift 44, reduce 13) on LT
+63: shift/reduce conflict (shift 45, reduce 13) on GT
+63: shift/reduce conflict (shift 46, reduce 13) on LEQ
+63: shift/reduce conflict (shift 47, reduce 13) on GEQ
+63: shift/reduce conflict (shift 48, reduce 13) on EQUALS
+63: shift/reduce conflict (shift 50, reduce 13) on DCOLON
+63: shift/reduce conflict (shift 10, reduce 13) on NIL
+63: shift/reduce conflict (shift 24, reduce 13) on LET
+63: shift/reduce conflict (shift 12, reduce 13) on IF
+63: shift/reduce conflict (shift 13, reduce 13) on FUN
+63: shift/reduce conflict (shift 14, reduce 13) on RAISE
+63: shift/reduce conflict (shift 51, reduce 13) on LOGICALAND
+63: shift/reduce conflict (shift 52, reduce 13) on LOGICALOR
+63: shift/reduce conflict (shift 15, reduce 13) on LPAREN
+63: shift/reduce conflict (shift 16, reduce 13) on UNIT
+63: shift/reduce conflict (shift 17, reduce 13) on HEAD
+63: shift/reduce conflict (shift 18, reduce 13) on TAIL
+63: shift/reduce conflict (shift 19, reduce 13) on FST
+63: shift/reduce conflict (shift 20, reduce 13) on SND
+state 63
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression MINUS expression .  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 13
+	IN  reduce 13
+	THEN  reduce 13
+	ELSE  reduce 13
+	RPAREN  reduce 13
+	COMMA  reduce 13
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+64: shift/reduce conflict (shift 3, reduce 15) on INT
+64: shift/reduce conflict (shift 4, reduce 15) on FLOAT
+64: shift/reduce conflict (shift 5, reduce 15) on STRING
+64: shift/reduce conflict (shift 6, reduce 15) on IDENT
+64: shift/reduce conflict (shift 7, reduce 15) on TRUE
+64: shift/reduce conflict (shift 8, reduce 15) on FALSE
+64: shift/reduce conflict (shift 9, reduce 15) on NEG
+64: shift/reduce conflict (shift 36, reduce 15) on PLUS
+64: shift/reduce conflict (shift 37, reduce 15) on MINUS
+64: shift/reduce conflict (shift 38, reduce 15) on TIMES
+64: shift/reduce conflict (shift 39, reduce 15) on DIV
+64: shift/reduce conflict (shift 40, reduce 15) on DPLUS
+64: shift/reduce conflict (shift 41, reduce 15) on DMINUS
+64: shift/reduce conflict (shift 42, reduce 15) on DTIMES
+64: shift/reduce conflict (shift 43, reduce 15) on DDIV
+64: shift/reduce conflict (shift 44, reduce 15) on LT
+64: shift/reduce conflict (shift 45, reduce 15) on GT
+64: shift/reduce conflict (shift 46, reduce 15) on LEQ
+64: shift/reduce conflict (shift 47, reduce 15) on GEQ
+64: shift/reduce conflict (shift 48, reduce 15) on EQUALS
+64: shift/reduce conflict (shift 50, reduce 15) on DCOLON
+64: shift/reduce conflict (shift 10, reduce 15) on NIL
+64: shift/reduce conflict (shift 24, reduce 15) on LET
+64: shift/reduce conflict (shift 12, reduce 15) on IF
+64: shift/reduce conflict (shift 13, reduce 15) on FUN
+64: shift/reduce conflict (shift 14, reduce 15) on RAISE
+64: shift/reduce conflict (shift 51, reduce 15) on LOGICALAND
+64: shift/reduce conflict (shift 52, reduce 15) on LOGICALOR
+64: shift/reduce conflict (shift 15, reduce 15) on LPAREN
+64: shift/reduce conflict (shift 16, reduce 15) on UNIT
+64: shift/reduce conflict (shift 17, reduce 15) on HEAD
+64: shift/reduce conflict (shift 18, reduce 15) on TAIL
+64: shift/reduce conflict (shift 19, reduce 15) on FST
+64: shift/reduce conflict (shift 20, reduce 15) on SND
+state 64
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression TIMES expression .  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 15
+	IN  reduce 15
+	THEN  reduce 15
+	ELSE  reduce 15
+	RPAREN  reduce 15
+	COMMA  reduce 15
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+65: shift/reduce conflict (shift 3, reduce 14) on INT
+65: shift/reduce conflict (shift 4, reduce 14) on FLOAT
+65: shift/reduce conflict (shift 5, reduce 14) on STRING
+65: shift/reduce conflict (shift 6, reduce 14) on IDENT
+65: shift/reduce conflict (shift 7, reduce 14) on TRUE
+65: shift/reduce conflict (shift 8, reduce 14) on FALSE
+65: shift/reduce conflict (shift 9, reduce 14) on NEG
+65: shift/reduce conflict (shift 36, reduce 14) on PLUS
+65: shift/reduce conflict (shift 37, reduce 14) on MINUS
+65: shift/reduce conflict (shift 38, reduce 14) on TIMES
+65: shift/reduce conflict (shift 39, reduce 14) on DIV
+65: shift/reduce conflict (shift 40, reduce 14) on DPLUS
+65: shift/reduce conflict (shift 41, reduce 14) on DMINUS
+65: shift/reduce conflict (shift 42, reduce 14) on DTIMES
+65: shift/reduce conflict (shift 43, reduce 14) on DDIV
+65: shift/reduce conflict (shift 44, reduce 14) on LT
+65: shift/reduce conflict (shift 45, reduce 14) on GT
+65: shift/reduce conflict (shift 46, reduce 14) on LEQ
+65: shift/reduce conflict (shift 47, reduce 14) on GEQ
+65: shift/reduce conflict (shift 48, reduce 14) on EQUALS
+65: shift/reduce conflict (shift 50, reduce 14) on DCOLON
+65: shift/reduce conflict (shift 10, reduce 14) on NIL
+65: shift/reduce conflict (shift 24, reduce 14) on LET
+65: shift/reduce conflict (shift 12, reduce 14) on IF
+65: shift/reduce conflict (shift 13, reduce 14) on FUN
+65: shift/reduce conflict (shift 14, reduce 14) on RAISE
+65: shift/reduce conflict (shift 51, reduce 14) on LOGICALAND
+65: shift/reduce conflict (shift 52, reduce 14) on LOGICALOR
+65: shift/reduce conflict (shift 15, reduce 14) on LPAREN
+65: shift/reduce conflict (shift 16, reduce 14) on UNIT
+65: shift/reduce conflict (shift 17, reduce 14) on HEAD
+65: shift/reduce conflict (shift 18, reduce 14) on TAIL
+65: shift/reduce conflict (shift 19, reduce 14) on FST
+65: shift/reduce conflict (shift 20, reduce 14) on SND
+state 65
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression DIV expression .  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 14
+	IN  reduce 14
+	THEN  reduce 14
+	ELSE  reduce 14
+	RPAREN  reduce 14
+	COMMA  reduce 14
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+66: shift/reduce conflict (shift 3, reduce 16) on INT
+66: shift/reduce conflict (shift 4, reduce 16) on FLOAT
+66: shift/reduce conflict (shift 5, reduce 16) on STRING
+66: shift/reduce conflict (shift 6, reduce 16) on IDENT
+66: shift/reduce conflict (shift 7, reduce 16) on TRUE
+66: shift/reduce conflict (shift 8, reduce 16) on FALSE
+66: shift/reduce conflict (shift 9, reduce 16) on NEG
+66: shift/reduce conflict (shift 36, reduce 16) on PLUS
+66: shift/reduce conflict (shift 37, reduce 16) on MINUS
+66: shift/reduce conflict (shift 38, reduce 16) on TIMES
+66: shift/reduce conflict (shift 39, reduce 16) on DIV
+66: shift/reduce conflict (shift 40, reduce 16) on DPLUS
+66: shift/reduce conflict (shift 41, reduce 16) on DMINUS
+66: shift/reduce conflict (shift 42, reduce 16) on DTIMES
+66: shift/reduce conflict (shift 43, reduce 16) on DDIV
+66: shift/reduce conflict (shift 44, reduce 16) on LT
+66: shift/reduce conflict (shift 45, reduce 16) on GT
+66: shift/reduce conflict (shift 46, reduce 16) on LEQ
+66: shift/reduce conflict (shift 47, reduce 16) on GEQ
+66: shift/reduce conflict (shift 48, reduce 16) on EQUALS
+66: shift/reduce conflict (shift 50, reduce 16) on DCOLON
+66: shift/reduce conflict (shift 10, reduce 16) on NIL
+66: shift/reduce conflict (shift 24, reduce 16) on LET
+66: shift/reduce conflict (shift 12, reduce 16) on IF
+66: shift/reduce conflict (shift 13, reduce 16) on FUN
+66: shift/reduce conflict (shift 14, reduce 16) on RAISE
+66: shift/reduce conflict (shift 51, reduce 16) on LOGICALAND
+66: shift/reduce conflict (shift 52, reduce 16) on LOGICALOR
+66: shift/reduce conflict (shift 15, reduce 16) on LPAREN
+66: shift/reduce conflict (shift 16, reduce 16) on UNIT
+66: shift/reduce conflict (shift 17, reduce 16) on HEAD
+66: shift/reduce conflict (shift 18, reduce 16) on TAIL
+66: shift/reduce conflict (shift 19, reduce 16) on FST
+66: shift/reduce conflict (shift 20, reduce 16) on SND
+state 66
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression DPLUS expression .  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 16
+	IN  reduce 16
+	THEN  reduce 16
+	ELSE  reduce 16
+	RPAREN  reduce 16
+	COMMA  reduce 16
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+67: shift/reduce conflict (shift 3, reduce 17) on INT
+67: shift/reduce conflict (shift 4, reduce 17) on FLOAT
+67: shift/reduce conflict (shift 5, reduce 17) on STRING
+67: shift/reduce conflict (shift 6, reduce 17) on IDENT
+67: shift/reduce conflict (shift 7, reduce 17) on TRUE
+67: shift/reduce conflict (shift 8, reduce 17) on FALSE
+67: shift/reduce conflict (shift 9, reduce 17) on NEG
+67: shift/reduce conflict (shift 36, reduce 17) on PLUS
+67: shift/reduce conflict (shift 37, reduce 17) on MINUS
+67: shift/reduce conflict (shift 38, reduce 17) on TIMES
+67: shift/reduce conflict (shift 39, reduce 17) on DIV
+67: shift/reduce conflict (shift 40, reduce 17) on DPLUS
+67: shift/reduce conflict (shift 41, reduce 17) on DMINUS
+67: shift/reduce conflict (shift 42, reduce 17) on DTIMES
+67: shift/reduce conflict (shift 43, reduce 17) on DDIV
+67: shift/reduce conflict (shift 44, reduce 17) on LT
+67: shift/reduce conflict (shift 45, reduce 17) on GT
+67: shift/reduce conflict (shift 46, reduce 17) on LEQ
+67: shift/reduce conflict (shift 47, reduce 17) on GEQ
+67: shift/reduce conflict (shift 48, reduce 17) on EQUALS
+67: shift/reduce conflict (shift 50, reduce 17) on DCOLON
+67: shift/reduce conflict (shift 10, reduce 17) on NIL
+67: shift/reduce conflict (shift 24, reduce 17) on LET
+67: shift/reduce conflict (shift 12, reduce 17) on IF
+67: shift/reduce conflict (shift 13, reduce 17) on FUN
+67: shift/reduce conflict (shift 14, reduce 17) on RAISE
+67: shift/reduce conflict (shift 51, reduce 17) on LOGICALAND
+67: shift/reduce conflict (shift 52, reduce 17) on LOGICALOR
+67: shift/reduce conflict (shift 15, reduce 17) on LPAREN
+67: shift/reduce conflict (shift 16, reduce 17) on UNIT
+67: shift/reduce conflict (shift 17, reduce 17) on HEAD
+67: shift/reduce conflict (shift 18, reduce 17) on TAIL
+67: shift/reduce conflict (shift 19, reduce 17) on FST
+67: shift/reduce conflict (shift 20, reduce 17) on SND
+state 67
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression DMINUS expression .  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 17
+	IN  reduce 17
+	THEN  reduce 17
+	ELSE  reduce 17
+	RPAREN  reduce 17
+	COMMA  reduce 17
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+68: shift/reduce conflict (shift 3, reduce 19) on INT
+68: shift/reduce conflict (shift 4, reduce 19) on FLOAT
+68: shift/reduce conflict (shift 5, reduce 19) on STRING
+68: shift/reduce conflict (shift 6, reduce 19) on IDENT
+68: shift/reduce conflict (shift 7, reduce 19) on TRUE
+68: shift/reduce conflict (shift 8, reduce 19) on FALSE
+68: shift/reduce conflict (shift 9, reduce 19) on NEG
+68: shift/reduce conflict (shift 36, reduce 19) on PLUS
+68: shift/reduce conflict (shift 37, reduce 19) on MINUS
+68: shift/reduce conflict (shift 38, reduce 19) on TIMES
+68: shift/reduce conflict (shift 39, reduce 19) on DIV
+68: shift/reduce conflict (shift 40, reduce 19) on DPLUS
+68: shift/reduce conflict (shift 41, reduce 19) on DMINUS
+68: shift/reduce conflict (shift 42, reduce 19) on DTIMES
+68: shift/reduce conflict (shift 43, reduce 19) on DDIV
+68: shift/reduce conflict (shift 44, reduce 19) on LT
+68: shift/reduce conflict (shift 45, reduce 19) on GT
+68: shift/reduce conflict (shift 46, reduce 19) on LEQ
+68: shift/reduce conflict (shift 47, reduce 19) on GEQ
+68: shift/reduce conflict (shift 48, reduce 19) on EQUALS
+68: shift/reduce conflict (shift 50, reduce 19) on DCOLON
+68: shift/reduce conflict (shift 10, reduce 19) on NIL
+68: shift/reduce conflict (shift 24, reduce 19) on LET
+68: shift/reduce conflict (shift 12, reduce 19) on IF
+68: shift/reduce conflict (shift 13, reduce 19) on FUN
+68: shift/reduce conflict (shift 14, reduce 19) on RAISE
+68: shift/reduce conflict (shift 51, reduce 19) on LOGICALAND
+68: shift/reduce conflict (shift 52, reduce 19) on LOGICALOR
+68: shift/reduce conflict (shift 15, reduce 19) on LPAREN
+68: shift/reduce conflict (shift 16, reduce 19) on UNIT
+68: shift/reduce conflict (shift 17, reduce 19) on HEAD
+68: shift/reduce conflict (shift 18, reduce 19) on TAIL
+68: shift/reduce conflict (shift 19, reduce 19) on FST
+68: shift/reduce conflict (shift 20, reduce 19) on SND
+state 68
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression DTIMES expression .  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 19
+	IN  reduce 19
+	THEN  reduce 19
+	ELSE  reduce 19
+	RPAREN  reduce 19
+	COMMA  reduce 19
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+69: shift/reduce conflict (shift 3, reduce 18) on INT
+69: shift/reduce conflict (shift 4, reduce 18) on FLOAT
+69: shift/reduce conflict (shift 5, reduce 18) on STRING
+69: shift/reduce conflict (shift 6, reduce 18) on IDENT
+69: shift/reduce conflict (shift 7, reduce 18) on TRUE
+69: shift/reduce conflict (shift 8, reduce 18) on FALSE
+69: shift/reduce conflict (shift 9, reduce 18) on NEG
+69: shift/reduce conflict (shift 36, reduce 18) on PLUS
+69: shift/reduce conflict (shift 37, reduce 18) on MINUS
+69: shift/reduce conflict (shift 38, reduce 18) on TIMES
+69: shift/reduce conflict (shift 39, reduce 18) on DIV
+69: shift/reduce conflict (shift 40, reduce 18) on DPLUS
+69: shift/reduce conflict (shift 41, reduce 18) on DMINUS
+69: shift/reduce conflict (shift 42, reduce 18) on DTIMES
+69: shift/reduce conflict (shift 43, reduce 18) on DDIV
+69: shift/reduce conflict (shift 44, reduce 18) on LT
+69: shift/reduce conflict (shift 45, reduce 18) on GT
+69: shift/reduce conflict (shift 46, reduce 18) on LEQ
+69: shift/reduce conflict (shift 47, reduce 18) on GEQ
+69: shift/reduce conflict (shift 48, reduce 18) on EQUALS
+69: shift/reduce conflict (shift 50, reduce 18) on DCOLON
+69: shift/reduce conflict (shift 10, reduce 18) on NIL
+69: shift/reduce conflict (shift 24, reduce 18) on LET
+69: shift/reduce conflict (shift 12, reduce 18) on IF
+69: shift/reduce conflict (shift 13, reduce 18) on FUN
+69: shift/reduce conflict (shift 14, reduce 18) on RAISE
+69: shift/reduce conflict (shift 51, reduce 18) on LOGICALAND
+69: shift/reduce conflict (shift 52, reduce 18) on LOGICALOR
+69: shift/reduce conflict (shift 15, reduce 18) on LPAREN
+69: shift/reduce conflict (shift 16, reduce 18) on UNIT
+69: shift/reduce conflict (shift 17, reduce 18) on HEAD
+69: shift/reduce conflict (shift 18, reduce 18) on TAIL
+69: shift/reduce conflict (shift 19, reduce 18) on FST
+69: shift/reduce conflict (shift 20, reduce 18) on SND
+state 69
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression DDIV expression .  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 18
+	IN  reduce 18
+	THEN  reduce 18
+	ELSE  reduce 18
+	RPAREN  reduce 18
+	COMMA  reduce 18
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+70: shift/reduce conflict (shift 3, reduce 20) on INT
+70: shift/reduce conflict (shift 4, reduce 20) on FLOAT
+70: shift/reduce conflict (shift 5, reduce 20) on STRING
+70: shift/reduce conflict (shift 6, reduce 20) on IDENT
+70: shift/reduce conflict (shift 7, reduce 20) on TRUE
+70: shift/reduce conflict (shift 8, reduce 20) on FALSE
+70: shift/reduce conflict (shift 9, reduce 20) on NEG
+70: shift/reduce conflict (shift 36, reduce 20) on PLUS
+70: shift/reduce conflict (shift 37, reduce 20) on MINUS
+70: shift/reduce conflict (shift 38, reduce 20) on TIMES
+70: shift/reduce conflict (shift 39, reduce 20) on DIV
+70: shift/reduce conflict (shift 40, reduce 20) on DPLUS
+70: shift/reduce conflict (shift 41, reduce 20) on DMINUS
+70: shift/reduce conflict (shift 42, reduce 20) on DTIMES
+70: shift/reduce conflict (shift 43, reduce 20) on DDIV
+70: shift/reduce conflict (shift 44, reduce 20) on LT
+70: shift/reduce conflict (shift 45, reduce 20) on GT
+70: shift/reduce conflict (shift 46, reduce 20) on LEQ
+70: shift/reduce conflict (shift 47, reduce 20) on GEQ
+70: shift/reduce conflict (shift 48, reduce 20) on EQUALS
+70: shift/reduce conflict (shift 50, reduce 20) on DCOLON
+70: shift/reduce conflict (shift 10, reduce 20) on NIL
+70: shift/reduce conflict (shift 24, reduce 20) on LET
+70: shift/reduce conflict (shift 12, reduce 20) on IF
+70: shift/reduce conflict (shift 13, reduce 20) on FUN
+70: shift/reduce conflict (shift 14, reduce 20) on RAISE
+70: shift/reduce conflict (shift 51, reduce 20) on LOGICALAND
+70: shift/reduce conflict (shift 52, reduce 20) on LOGICALOR
+70: shift/reduce conflict (shift 15, reduce 20) on LPAREN
+70: shift/reduce conflict (shift 16, reduce 20) on UNIT
+70: shift/reduce conflict (shift 17, reduce 20) on HEAD
+70: shift/reduce conflict (shift 18, reduce 20) on TAIL
+70: shift/reduce conflict (shift 19, reduce 20) on FST
+70: shift/reduce conflict (shift 20, reduce 20) on SND
+state 70
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression LT expression .  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 20
+	IN  reduce 20
+	THEN  reduce 20
+	ELSE  reduce 20
+	RPAREN  reduce 20
+	COMMA  reduce 20
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+71: shift/reduce conflict (shift 3, reduce 21) on INT
+71: shift/reduce conflict (shift 4, reduce 21) on FLOAT
+71: shift/reduce conflict (shift 5, reduce 21) on STRING
+71: shift/reduce conflict (shift 6, reduce 21) on IDENT
+71: shift/reduce conflict (shift 7, reduce 21) on TRUE
+71: shift/reduce conflict (shift 8, reduce 21) on FALSE
+71: shift/reduce conflict (shift 9, reduce 21) on NEG
+71: shift/reduce conflict (shift 36, reduce 21) on PLUS
+71: shift/reduce conflict (shift 37, reduce 21) on MINUS
+71: shift/reduce conflict (shift 38, reduce 21) on TIMES
+71: shift/reduce conflict (shift 39, reduce 21) on DIV
+71: shift/reduce conflict (shift 40, reduce 21) on DPLUS
+71: shift/reduce conflict (shift 41, reduce 21) on DMINUS
+71: shift/reduce conflict (shift 42, reduce 21) on DTIMES
+71: shift/reduce conflict (shift 43, reduce 21) on DDIV
+71: shift/reduce conflict (shift 44, reduce 21) on LT
+71: shift/reduce conflict (shift 45, reduce 21) on GT
+71: shift/reduce conflict (shift 46, reduce 21) on LEQ
+71: shift/reduce conflict (shift 47, reduce 21) on GEQ
+71: shift/reduce conflict (shift 48, reduce 21) on EQUALS
+71: shift/reduce conflict (shift 50, reduce 21) on DCOLON
+71: shift/reduce conflict (shift 10, reduce 21) on NIL
+71: shift/reduce conflict (shift 24, reduce 21) on LET
+71: shift/reduce conflict (shift 12, reduce 21) on IF
+71: shift/reduce conflict (shift 13, reduce 21) on FUN
+71: shift/reduce conflict (shift 14, reduce 21) on RAISE
+71: shift/reduce conflict (shift 51, reduce 21) on LOGICALAND
+71: shift/reduce conflict (shift 52, reduce 21) on LOGICALOR
+71: shift/reduce conflict (shift 15, reduce 21) on LPAREN
+71: shift/reduce conflict (shift 16, reduce 21) on UNIT
+71: shift/reduce conflict (shift 17, reduce 21) on HEAD
+71: shift/reduce conflict (shift 18, reduce 21) on TAIL
+71: shift/reduce conflict (shift 19, reduce 21) on FST
+71: shift/reduce conflict (shift 20, reduce 21) on SND
+state 71
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression GT expression .  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 21
+	IN  reduce 21
+	THEN  reduce 21
+	ELSE  reduce 21
+	RPAREN  reduce 21
+	COMMA  reduce 21
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+72: shift/reduce conflict (shift 3, reduce 23) on INT
+72: shift/reduce conflict (shift 4, reduce 23) on FLOAT
+72: shift/reduce conflict (shift 5, reduce 23) on STRING
+72: shift/reduce conflict (shift 6, reduce 23) on IDENT
+72: shift/reduce conflict (shift 7, reduce 23) on TRUE
+72: shift/reduce conflict (shift 8, reduce 23) on FALSE
+72: shift/reduce conflict (shift 9, reduce 23) on NEG
+72: shift/reduce conflict (shift 36, reduce 23) on PLUS
+72: shift/reduce conflict (shift 37, reduce 23) on MINUS
+72: shift/reduce conflict (shift 38, reduce 23) on TIMES
+72: shift/reduce conflict (shift 39, reduce 23) on DIV
+72: shift/reduce conflict (shift 40, reduce 23) on DPLUS
+72: shift/reduce conflict (shift 41, reduce 23) on DMINUS
+72: shift/reduce conflict (shift 42, reduce 23) on DTIMES
+72: shift/reduce conflict (shift 43, reduce 23) on DDIV
+72: shift/reduce conflict (shift 44, reduce 23) on LT
+72: shift/reduce conflict (shift 45, reduce 23) on GT
+72: shift/reduce conflict (shift 46, reduce 23) on LEQ
+72: shift/reduce conflict (shift 47, reduce 23) on GEQ
+72: shift/reduce conflict (shift 48, reduce 23) on EQUALS
+72: shift/reduce conflict (shift 50, reduce 23) on DCOLON
+72: shift/reduce conflict (shift 10, reduce 23) on NIL
+72: shift/reduce conflict (shift 24, reduce 23) on LET
+72: shift/reduce conflict (shift 12, reduce 23) on IF
+72: shift/reduce conflict (shift 13, reduce 23) on FUN
+72: shift/reduce conflict (shift 14, reduce 23) on RAISE
+72: shift/reduce conflict (shift 51, reduce 23) on LOGICALAND
+72: shift/reduce conflict (shift 52, reduce 23) on LOGICALOR
+72: shift/reduce conflict (shift 15, reduce 23) on LPAREN
+72: shift/reduce conflict (shift 16, reduce 23) on UNIT
+72: shift/reduce conflict (shift 17, reduce 23) on HEAD
+72: shift/reduce conflict (shift 18, reduce 23) on TAIL
+72: shift/reduce conflict (shift 19, reduce 23) on FST
+72: shift/reduce conflict (shift 20, reduce 23) on SND
+state 72
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression LEQ expression .  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 23
+	IN  reduce 23
+	THEN  reduce 23
+	ELSE  reduce 23
+	RPAREN  reduce 23
+	COMMA  reduce 23
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+73: shift/reduce conflict (shift 3, reduce 24) on INT
+73: shift/reduce conflict (shift 4, reduce 24) on FLOAT
+73: shift/reduce conflict (shift 5, reduce 24) on STRING
+73: shift/reduce conflict (shift 6, reduce 24) on IDENT
+73: shift/reduce conflict (shift 7, reduce 24) on TRUE
+73: shift/reduce conflict (shift 8, reduce 24) on FALSE
+73: shift/reduce conflict (shift 9, reduce 24) on NEG
+73: shift/reduce conflict (shift 36, reduce 24) on PLUS
+73: shift/reduce conflict (shift 37, reduce 24) on MINUS
+73: shift/reduce conflict (shift 38, reduce 24) on TIMES
+73: shift/reduce conflict (shift 39, reduce 24) on DIV
+73: shift/reduce conflict (shift 40, reduce 24) on DPLUS
+73: shift/reduce conflict (shift 41, reduce 24) on DMINUS
+73: shift/reduce conflict (shift 42, reduce 24) on DTIMES
+73: shift/reduce conflict (shift 43, reduce 24) on DDIV
+73: shift/reduce conflict (shift 44, reduce 24) on LT
+73: shift/reduce conflict (shift 45, reduce 24) on GT
+73: shift/reduce conflict (shift 46, reduce 24) on LEQ
+73: shift/reduce conflict (shift 47, reduce 24) on GEQ
+73: shift/reduce conflict (shift 48, reduce 24) on EQUALS
+73: shift/reduce conflict (shift 50, reduce 24) on DCOLON
+73: shift/reduce conflict (shift 10, reduce 24) on NIL
+73: shift/reduce conflict (shift 24, reduce 24) on LET
+73: shift/reduce conflict (shift 12, reduce 24) on IF
+73: shift/reduce conflict (shift 13, reduce 24) on FUN
+73: shift/reduce conflict (shift 14, reduce 24) on RAISE
+73: shift/reduce conflict (shift 51, reduce 24) on LOGICALAND
+73: shift/reduce conflict (shift 52, reduce 24) on LOGICALOR
+73: shift/reduce conflict (shift 15, reduce 24) on LPAREN
+73: shift/reduce conflict (shift 16, reduce 24) on UNIT
+73: shift/reduce conflict (shift 17, reduce 24) on HEAD
+73: shift/reduce conflict (shift 18, reduce 24) on TAIL
+73: shift/reduce conflict (shift 19, reduce 24) on FST
+73: shift/reduce conflict (shift 20, reduce 24) on SND
+state 73
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression GEQ expression .  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 24
+	IN  reduce 24
+	THEN  reduce 24
+	ELSE  reduce 24
+	RPAREN  reduce 24
+	COMMA  reduce 24
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+74: shift/reduce conflict (shift 3, reduce 22) on INT
+74: shift/reduce conflict (shift 4, reduce 22) on FLOAT
+74: shift/reduce conflict (shift 5, reduce 22) on STRING
+74: shift/reduce conflict (shift 6, reduce 22) on IDENT
+74: shift/reduce conflict (shift 7, reduce 22) on TRUE
+74: shift/reduce conflict (shift 8, reduce 22) on FALSE
+74: shift/reduce conflict (shift 9, reduce 22) on NEG
+74: shift/reduce conflict (shift 36, reduce 22) on PLUS
+74: shift/reduce conflict (shift 37, reduce 22) on MINUS
+74: shift/reduce conflict (shift 38, reduce 22) on TIMES
+74: shift/reduce conflict (shift 39, reduce 22) on DIV
+74: shift/reduce conflict (shift 40, reduce 22) on DPLUS
+74: shift/reduce conflict (shift 41, reduce 22) on DMINUS
+74: shift/reduce conflict (shift 42, reduce 22) on DTIMES
+74: shift/reduce conflict (shift 43, reduce 22) on DDIV
+74: shift/reduce conflict (shift 44, reduce 22) on LT
+74: shift/reduce conflict (shift 45, reduce 22) on GT
+74: shift/reduce conflict (shift 46, reduce 22) on LEQ
+74: shift/reduce conflict (shift 47, reduce 22) on GEQ
+74: shift/reduce conflict (shift 48, reduce 22) on EQUALS
+74: shift/reduce conflict (shift 50, reduce 22) on DCOLON
+74: shift/reduce conflict (shift 10, reduce 22) on NIL
+74: shift/reduce conflict (shift 24, reduce 22) on LET
+74: shift/reduce conflict (shift 12, reduce 22) on IF
+74: shift/reduce conflict (shift 13, reduce 22) on FUN
+74: shift/reduce conflict (shift 14, reduce 22) on RAISE
+74: shift/reduce conflict (shift 51, reduce 22) on LOGICALAND
+74: shift/reduce conflict (shift 52, reduce 22) on LOGICALOR
+74: shift/reduce conflict (shift 15, reduce 22) on LPAREN
+74: shift/reduce conflict (shift 16, reduce 22) on UNIT
+74: shift/reduce conflict (shift 17, reduce 22) on HEAD
+74: shift/reduce conflict (shift 18, reduce 22) on TAIL
+74: shift/reduce conflict (shift 19, reduce 22) on FST
+74: shift/reduce conflict (shift 20, reduce 22) on SND
+state 74
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression EQUALS expression .  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 22
+	IN  reduce 22
+	THEN  reduce 22
+	ELSE  reduce 22
+	RPAREN  reduce 22
+	COMMA  reduce 22
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+75: shift/reduce conflict (shift 3, reduce 25) on INT
+75: shift/reduce conflict (shift 4, reduce 25) on FLOAT
+75: shift/reduce conflict (shift 5, reduce 25) on STRING
+75: shift/reduce conflict (shift 6, reduce 25) on IDENT
+75: shift/reduce conflict (shift 7, reduce 25) on TRUE
+75: shift/reduce conflict (shift 8, reduce 25) on FALSE
+75: shift/reduce conflict (shift 9, reduce 25) on NEG
+75: shift/reduce conflict (shift 36, reduce 25) on PLUS
+75: shift/reduce conflict (shift 37, reduce 25) on MINUS
+75: shift/reduce conflict (shift 38, reduce 25) on TIMES
+75: shift/reduce conflict (shift 39, reduce 25) on DIV
+75: shift/reduce conflict (shift 40, reduce 25) on DPLUS
+75: shift/reduce conflict (shift 41, reduce 25) on DMINUS
+75: shift/reduce conflict (shift 42, reduce 25) on DTIMES
+75: shift/reduce conflict (shift 43, reduce 25) on DDIV
+75: shift/reduce conflict (shift 44, reduce 25) on LT
+75: shift/reduce conflict (shift 45, reduce 25) on GT
+75: shift/reduce conflict (shift 46, reduce 25) on LEQ
+75: shift/reduce conflict (shift 47, reduce 25) on GEQ
+75: shift/reduce conflict (shift 48, reduce 25) on EQUALS
+75: shift/reduce conflict (shift 50, reduce 25) on DCOLON
+75: shift/reduce conflict (shift 10, reduce 25) on NIL
+75: shift/reduce conflict (shift 24, reduce 25) on LET
+75: shift/reduce conflict (shift 12, reduce 25) on IF
+75: shift/reduce conflict (shift 13, reduce 25) on FUN
+75: shift/reduce conflict (shift 14, reduce 25) on RAISE
+75: shift/reduce conflict (shift 51, reduce 25) on LOGICALAND
+75: shift/reduce conflict (shift 52, reduce 25) on LOGICALOR
+75: shift/reduce conflict (shift 15, reduce 25) on LPAREN
+75: shift/reduce conflict (shift 16, reduce 25) on UNIT
+75: shift/reduce conflict (shift 17, reduce 25) on HEAD
+75: shift/reduce conflict (shift 18, reduce 25) on TAIL
+75: shift/reduce conflict (shift 19, reduce 25) on FST
+75: shift/reduce conflict (shift 20, reduce 25) on SND
+state 75
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression DCOLON expression .  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 25
+	IN  reduce 25
+	THEN  reduce 25
+	ELSE  reduce 25
+	RPAREN  reduce 25
+	COMMA  reduce 25
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+76: shift/reduce conflict (shift 3, reduce 29) on INT
+76: shift/reduce conflict (shift 4, reduce 29) on FLOAT
+76: shift/reduce conflict (shift 5, reduce 29) on STRING
+76: shift/reduce conflict (shift 6, reduce 29) on IDENT
+76: shift/reduce conflict (shift 7, reduce 29) on TRUE
+76: shift/reduce conflict (shift 8, reduce 29) on FALSE
+76: shift/reduce conflict (shift 9, reduce 29) on NEG
+76: shift/reduce conflict (shift 36, reduce 29) on PLUS
+76: shift/reduce conflict (shift 37, reduce 29) on MINUS
+76: shift/reduce conflict (shift 38, reduce 29) on TIMES
+76: shift/reduce conflict (shift 39, reduce 29) on DIV
+76: shift/reduce conflict (shift 40, reduce 29) on DPLUS
+76: shift/reduce conflict (shift 41, reduce 29) on DMINUS
+76: shift/reduce conflict (shift 42, reduce 29) on DTIMES
+76: shift/reduce conflict (shift 43, reduce 29) on DDIV
+76: shift/reduce conflict (shift 44, reduce 29) on LT
+76: shift/reduce conflict (shift 45, reduce 29) on GT
+76: shift/reduce conflict (shift 46, reduce 29) on LEQ
+76: shift/reduce conflict (shift 47, reduce 29) on GEQ
+76: shift/reduce conflict (shift 48, reduce 29) on EQUALS
+76: shift/reduce conflict (shift 50, reduce 29) on DCOLON
+76: shift/reduce conflict (shift 10, reduce 29) on NIL
+76: shift/reduce conflict (shift 24, reduce 29) on LET
+76: shift/reduce conflict (shift 12, reduce 29) on IF
+76: shift/reduce conflict (shift 13, reduce 29) on FUN
+76: shift/reduce conflict (shift 14, reduce 29) on RAISE
+76: shift/reduce conflict (shift 51, reduce 29) on LOGICALAND
+76: shift/reduce conflict (shift 52, reduce 29) on LOGICALOR
+76: shift/reduce conflict (shift 15, reduce 29) on LPAREN
+76: shift/reduce conflict (shift 16, reduce 29) on UNIT
+76: shift/reduce conflict (shift 17, reduce 29) on HEAD
+76: shift/reduce conflict (shift 18, reduce 29) on TAIL
+76: shift/reduce conflict (shift 19, reduce 29) on FST
+76: shift/reduce conflict (shift 20, reduce 29) on SND
+state 76
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression LOGICALAND expression .  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 29
+	IN  reduce 29
+	THEN  reduce 29
+	ELSE  reduce 29
+	RPAREN  reduce 29
+	COMMA  reduce 29
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+77: shift/reduce conflict (shift 3, reduce 30) on INT
+77: shift/reduce conflict (shift 4, reduce 30) on FLOAT
+77: shift/reduce conflict (shift 5, reduce 30) on STRING
+77: shift/reduce conflict (shift 6, reduce 30) on IDENT
+77: shift/reduce conflict (shift 7, reduce 30) on TRUE
+77: shift/reduce conflict (shift 8, reduce 30) on FALSE
+77: shift/reduce conflict (shift 9, reduce 30) on NEG
+77: shift/reduce conflict (shift 36, reduce 30) on PLUS
+77: shift/reduce conflict (shift 37, reduce 30) on MINUS
+77: shift/reduce conflict (shift 38, reduce 30) on TIMES
+77: shift/reduce conflict (shift 39, reduce 30) on DIV
+77: shift/reduce conflict (shift 40, reduce 30) on DPLUS
+77: shift/reduce conflict (shift 41, reduce 30) on DMINUS
+77: shift/reduce conflict (shift 42, reduce 30) on DTIMES
+77: shift/reduce conflict (shift 43, reduce 30) on DDIV
+77: shift/reduce conflict (shift 44, reduce 30) on LT
+77: shift/reduce conflict (shift 45, reduce 30) on GT
+77: shift/reduce conflict (shift 46, reduce 30) on LEQ
+77: shift/reduce conflict (shift 47, reduce 30) on GEQ
+77: shift/reduce conflict (shift 48, reduce 30) on EQUALS
+77: shift/reduce conflict (shift 50, reduce 30) on DCOLON
+77: shift/reduce conflict (shift 10, reduce 30) on NIL
+77: shift/reduce conflict (shift 24, reduce 30) on LET
+77: shift/reduce conflict (shift 12, reduce 30) on IF
+77: shift/reduce conflict (shift 13, reduce 30) on FUN
+77: shift/reduce conflict (shift 14, reduce 30) on RAISE
+77: shift/reduce conflict (shift 51, reduce 30) on LOGICALAND
+77: shift/reduce conflict (shift 52, reduce 30) on LOGICALOR
+77: shift/reduce conflict (shift 15, reduce 30) on LPAREN
+77: shift/reduce conflict (shift 16, reduce 30) on UNIT
+77: shift/reduce conflict (shift 17, reduce 30) on HEAD
+77: shift/reduce conflict (shift 18, reduce 30) on TAIL
+77: shift/reduce conflict (shift 19, reduce 30) on FST
+77: shift/reduce conflict (shift 20, reduce 30) on SND
+state 77
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+	expression : expression LOGICALOR expression .  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 30
+	IN  reduce 30
+	THEN  reduce 30
+	ELSE  reduce 30
+	RPAREN  reduce 30
+	COMMA  reduce 30
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 78
+	expression : LET IDENT EQUALS . expression IN expression  (26)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 85
+	atomic_expression  goto 23
+
+
+state 79
+	expression : LET REC IDENT . IDENT EQUALS expression IN expression  (27)
+
+	IDENT  shift 86
+	.  error
+
+
+state 80
+	main : LET IDENT EQUALS expression . DSEMI  (2)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : LET IDENT EQUALS expression . IN expression  (26)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DSEMI  shift 87
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IN  shift 88
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 81
+	main : LET REC IDENT IDENT . EQUALS expression DSEMI  (3)
+	expression : LET REC IDENT IDENT . EQUALS expression IN expression  (27)
+
+	EQUALS  shift 89
+	.  error
+
+
+state 82
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+	expression : IF expression THEN expression . ELSE expression  (32)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	ELSE  shift 90
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+83: shift/reduce conflict (shift 3, reduce 31) on INT
+83: shift/reduce conflict (shift 4, reduce 31) on FLOAT
+83: shift/reduce conflict (shift 5, reduce 31) on STRING
+83: shift/reduce conflict (shift 6, reduce 31) on IDENT
+83: shift/reduce conflict (shift 7, reduce 31) on TRUE
+83: shift/reduce conflict (shift 8, reduce 31) on FALSE
+83: shift/reduce conflict (shift 9, reduce 31) on NEG
+83: shift/reduce conflict (shift 36, reduce 31) on PLUS
+83: shift/reduce conflict (shift 37, reduce 31) on MINUS
+83: shift/reduce conflict (shift 38, reduce 31) on TIMES
+83: shift/reduce conflict (shift 39, reduce 31) on DIV
+83: shift/reduce conflict (shift 40, reduce 31) on DPLUS
+83: shift/reduce conflict (shift 41, reduce 31) on DMINUS
+83: shift/reduce conflict (shift 42, reduce 31) on DTIMES
+83: shift/reduce conflict (shift 43, reduce 31) on DDIV
+83: shift/reduce conflict (shift 44, reduce 31) on LT
+83: shift/reduce conflict (shift 45, reduce 31) on GT
+83: shift/reduce conflict (shift 46, reduce 31) on LEQ
+83: shift/reduce conflict (shift 47, reduce 31) on GEQ
+83: shift/reduce conflict (shift 48, reduce 31) on EQUALS
+83: shift/reduce conflict (shift 50, reduce 31) on DCOLON
+83: shift/reduce conflict (shift 10, reduce 31) on NIL
+83: shift/reduce conflict (shift 24, reduce 31) on LET
+83: shift/reduce conflict (shift 12, reduce 31) on IF
+83: shift/reduce conflict (shift 13, reduce 31) on FUN
+83: shift/reduce conflict (shift 14, reduce 31) on RAISE
+83: shift/reduce conflict (shift 51, reduce 31) on LOGICALAND
+83: shift/reduce conflict (shift 52, reduce 31) on LOGICALOR
+83: shift/reduce conflict (shift 15, reduce 31) on LPAREN
+83: shift/reduce conflict (shift 16, reduce 31) on UNIT
+83: shift/reduce conflict (shift 17, reduce 31) on HEAD
+83: shift/reduce conflict (shift 18, reduce 31) on TAIL
+83: shift/reduce conflict (shift 19, reduce 31) on FST
+83: shift/reduce conflict (shift 20, reduce 31) on SND
+state 83
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+	expression : FUN IDENT ARROW expression .  (31)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 31
+	IN  reduce 31
+	THEN  reduce 31
+	ELSE  reduce 31
+	RPAREN  reduce 31
+	COMMA  reduce 31
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 84
+	expression : LPAREN expression COMMA expression . RPAREN  (6)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	RPAREN  shift 91
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 85
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : LET IDENT EQUALS expression . IN expression  (26)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IN  shift 88
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 86
+	expression : LET REC IDENT IDENT . EQUALS expression IN expression  (27)
+
+	EQUALS  shift 92
+	.  error
+
+
+state 87
+	main : LET IDENT EQUALS expression DSEMI .  (2)
+
+	.  reduce 2
+
+
+state 88
+	expression : LET IDENT EQUALS expression IN . expression  (26)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 93
+	atomic_expression  goto 23
+
+
+state 89
+	main : LET REC IDENT IDENT EQUALS . expression DSEMI  (3)
+	expression : LET REC IDENT IDENT EQUALS . expression IN expression  (27)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 94
+	atomic_expression  goto 23
+
+
+state 90
+	expression : IF expression THEN expression ELSE . expression  (32)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 95
+	atomic_expression  goto 23
+
+
+state 91
+	expression : LPAREN expression COMMA expression RPAREN .  (6)
+
+	.  reduce 6
+
+
+state 92
+	expression : LET REC IDENT IDENT EQUALS . expression IN expression  (27)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 96
+	atomic_expression  goto 23
+
+
+93: shift/reduce conflict (shift 3, reduce 26) on INT
+93: shift/reduce conflict (shift 4, reduce 26) on FLOAT
+93: shift/reduce conflict (shift 5, reduce 26) on STRING
+93: shift/reduce conflict (shift 6, reduce 26) on IDENT
+93: shift/reduce conflict (shift 7, reduce 26) on TRUE
+93: shift/reduce conflict (shift 8, reduce 26) on FALSE
+93: shift/reduce conflict (shift 9, reduce 26) on NEG
+93: shift/reduce conflict (shift 36, reduce 26) on PLUS
+93: shift/reduce conflict (shift 37, reduce 26) on MINUS
+93: shift/reduce conflict (shift 38, reduce 26) on TIMES
+93: shift/reduce conflict (shift 39, reduce 26) on DIV
+93: shift/reduce conflict (shift 40, reduce 26) on DPLUS
+93: shift/reduce conflict (shift 41, reduce 26) on DMINUS
+93: shift/reduce conflict (shift 42, reduce 26) on DTIMES
+93: shift/reduce conflict (shift 43, reduce 26) on DDIV
+93: shift/reduce conflict (shift 44, reduce 26) on LT
+93: shift/reduce conflict (shift 45, reduce 26) on GT
+93: shift/reduce conflict (shift 46, reduce 26) on LEQ
+93: shift/reduce conflict (shift 47, reduce 26) on GEQ
+93: shift/reduce conflict (shift 48, reduce 26) on EQUALS
+93: shift/reduce conflict (shift 50, reduce 26) on DCOLON
+93: shift/reduce conflict (shift 10, reduce 26) on NIL
+93: shift/reduce conflict (shift 24, reduce 26) on LET
+93: shift/reduce conflict (shift 12, reduce 26) on IF
+93: shift/reduce conflict (shift 13, reduce 26) on FUN
+93: shift/reduce conflict (shift 14, reduce 26) on RAISE
+93: shift/reduce conflict (shift 51, reduce 26) on LOGICALAND
+93: shift/reduce conflict (shift 52, reduce 26) on LOGICALOR
+93: shift/reduce conflict (shift 15, reduce 26) on LPAREN
+93: shift/reduce conflict (shift 16, reduce 26) on UNIT
+93: shift/reduce conflict (shift 17, reduce 26) on HEAD
+93: shift/reduce conflict (shift 18, reduce 26) on TAIL
+93: shift/reduce conflict (shift 19, reduce 26) on FST
+93: shift/reduce conflict (shift 20, reduce 26) on SND
+state 93
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : LET IDENT EQUALS expression IN expression .  (26)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 26
+	IN  reduce 26
+	THEN  reduce 26
+	ELSE  reduce 26
+	RPAREN  reduce 26
+	COMMA  reduce 26
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 94
+	main : LET REC IDENT IDENT EQUALS expression . DSEMI  (3)
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : LET REC IDENT IDENT EQUALS expression . IN expression  (27)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DSEMI  shift 97
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IN  shift 98
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+95: shift/reduce conflict (shift 3, reduce 32) on INT
+95: shift/reduce conflict (shift 4, reduce 32) on FLOAT
+95: shift/reduce conflict (shift 5, reduce 32) on STRING
+95: shift/reduce conflict (shift 6, reduce 32) on IDENT
+95: shift/reduce conflict (shift 7, reduce 32) on TRUE
+95: shift/reduce conflict (shift 8, reduce 32) on FALSE
+95: shift/reduce conflict (shift 9, reduce 32) on NEG
+95: shift/reduce conflict (shift 36, reduce 32) on PLUS
+95: shift/reduce conflict (shift 37, reduce 32) on MINUS
+95: shift/reduce conflict (shift 38, reduce 32) on TIMES
+95: shift/reduce conflict (shift 39, reduce 32) on DIV
+95: shift/reduce conflict (shift 40, reduce 32) on DPLUS
+95: shift/reduce conflict (shift 41, reduce 32) on DMINUS
+95: shift/reduce conflict (shift 42, reduce 32) on DTIMES
+95: shift/reduce conflict (shift 43, reduce 32) on DDIV
+95: shift/reduce conflict (shift 44, reduce 32) on LT
+95: shift/reduce conflict (shift 45, reduce 32) on GT
+95: shift/reduce conflict (shift 46, reduce 32) on LEQ
+95: shift/reduce conflict (shift 47, reduce 32) on GEQ
+95: shift/reduce conflict (shift 48, reduce 32) on EQUALS
+95: shift/reduce conflict (shift 50, reduce 32) on DCOLON
+95: shift/reduce conflict (shift 10, reduce 32) on NIL
+95: shift/reduce conflict (shift 24, reduce 32) on LET
+95: shift/reduce conflict (shift 12, reduce 32) on IF
+95: shift/reduce conflict (shift 13, reduce 32) on FUN
+95: shift/reduce conflict (shift 14, reduce 32) on RAISE
+95: shift/reduce conflict (shift 51, reduce 32) on LOGICALAND
+95: shift/reduce conflict (shift 52, reduce 32) on LOGICALOR
+95: shift/reduce conflict (shift 15, reduce 32) on LPAREN
+95: shift/reduce conflict (shift 16, reduce 32) on UNIT
+95: shift/reduce conflict (shift 17, reduce 32) on HEAD
+95: shift/reduce conflict (shift 18, reduce 32) on TAIL
+95: shift/reduce conflict (shift 19, reduce 32) on FST
+95: shift/reduce conflict (shift 20, reduce 32) on SND
+state 95
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+	expression : IF expression THEN expression ELSE expression .  (32)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 32
+	IN  reduce 32
+	THEN  reduce 32
+	ELSE  reduce 32
+	RPAREN  reduce 32
+	COMMA  reduce 32
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 96
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : LET REC IDENT IDENT EQUALS expression . IN expression  (27)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IN  shift 98
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+state 97
+	main : LET REC IDENT IDENT EQUALS expression DSEMI .  (3)
+
+	.  reduce 3
+
+
+state 98
+	expression : LET REC IDENT IDENT EQUALS expression IN . expression  (27)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	.  error
+
+	expression  goto 99
+	atomic_expression  goto 23
+
+
+99: shift/reduce conflict (shift 3, reduce 27) on INT
+99: shift/reduce conflict (shift 4, reduce 27) on FLOAT
+99: shift/reduce conflict (shift 5, reduce 27) on STRING
+99: shift/reduce conflict (shift 6, reduce 27) on IDENT
+99: shift/reduce conflict (shift 7, reduce 27) on TRUE
+99: shift/reduce conflict (shift 8, reduce 27) on FALSE
+99: shift/reduce conflict (shift 9, reduce 27) on NEG
+99: shift/reduce conflict (shift 36, reduce 27) on PLUS
+99: shift/reduce conflict (shift 37, reduce 27) on MINUS
+99: shift/reduce conflict (shift 38, reduce 27) on TIMES
+99: shift/reduce conflict (shift 39, reduce 27) on DIV
+99: shift/reduce conflict (shift 40, reduce 27) on DPLUS
+99: shift/reduce conflict (shift 41, reduce 27) on DMINUS
+99: shift/reduce conflict (shift 42, reduce 27) on DTIMES
+99: shift/reduce conflict (shift 43, reduce 27) on DDIV
+99: shift/reduce conflict (shift 44, reduce 27) on LT
+99: shift/reduce conflict (shift 45, reduce 27) on GT
+99: shift/reduce conflict (shift 46, reduce 27) on LEQ
+99: shift/reduce conflict (shift 47, reduce 27) on GEQ
+99: shift/reduce conflict (shift 48, reduce 27) on EQUALS
+99: shift/reduce conflict (shift 50, reduce 27) on DCOLON
+99: shift/reduce conflict (shift 10, reduce 27) on NIL
+99: shift/reduce conflict (shift 24, reduce 27) on LET
+99: shift/reduce conflict (shift 12, reduce 27) on IF
+99: shift/reduce conflict (shift 13, reduce 27) on FUN
+99: shift/reduce conflict (shift 14, reduce 27) on RAISE
+99: shift/reduce conflict (shift 51, reduce 27) on LOGICALAND
+99: shift/reduce conflict (shift 52, reduce 27) on LOGICALOR
+99: shift/reduce conflict (shift 15, reduce 27) on LPAREN
+99: shift/reduce conflict (shift 16, reduce 27) on UNIT
+99: shift/reduce conflict (shift 17, reduce 27) on HEAD
+99: shift/reduce conflict (shift 18, reduce 27) on TAIL
+99: shift/reduce conflict (shift 19, reduce 27) on FST
+99: shift/reduce conflict (shift 20, reduce 27) on SND
+state 99
+	expression : expression . PLUS expression  (12)
+	expression : expression . MINUS expression  (13)
+	expression : expression . DIV expression  (14)
+	expression : expression . TIMES expression  (15)
+	expression : expression . DPLUS expression  (16)
+	expression : expression . DMINUS expression  (17)
+	expression : expression . DDIV expression  (18)
+	expression : expression . DTIMES expression  (19)
+	expression : expression . LT expression  (20)
+	expression : expression . GT expression  (21)
+	expression : expression . EQUALS expression  (22)
+	expression : expression . LEQ expression  (23)
+	expression : expression . GEQ expression  (24)
+	expression : expression . DCOLON expression  (25)
+	expression : LET REC IDENT IDENT EQUALS expression IN expression .  (27)
+	expression : expression . expression  (28)
+	expression : expression . LOGICALAND expression  (29)
+	expression : expression . LOGICALOR expression  (30)
+
+	INT  shift 3
+	FLOAT  shift 4
+	STRING  shift 5
+	IDENT  shift 6
+	TRUE  shift 7
+	FALSE  shift 8
+	NEG  shift 9
+	PLUS  shift 36
+	MINUS  shift 37
+	TIMES  shift 38
+	DIV  shift 39
+	DPLUS  shift 40
+	DMINUS  shift 41
+	DTIMES  shift 42
+	DDIV  shift 43
+	LT  shift 44
+	GT  shift 45
+	LEQ  shift 46
+	GEQ  shift 47
+	EQUALS  shift 48
+	DCOLON  shift 50
+	NIL  shift 10
+	LET  shift 24
+	IF  shift 12
+	FUN  shift 13
+	RAISE  shift 14
+	LOGICALAND  shift 51
+	LOGICALOR  shift 52
+	LPAREN  shift 15
+	UNIT  shift 16
+	HEAD  shift 17
+	TAIL  shift 18
+	FST  shift 19
+	SND  shift 20
+	DSEMI  reduce 27
+	IN  reduce 27
+	THEN  reduce 27
+	ELSE  reduce 27
+	RPAREN  reduce 27
+	COMMA  reduce 27
+
+	expression  goto 53
+	atomic_expression  goto 23
+
+
+Rules never reduced:
+	pat : UNDERSCORE  (34)
+	pat : INT  (35)
+
+
+State 25 contains 34 shift/reduce conflicts.
+State 30 contains 34 shift/reduce conflicts.
+State 32 contains 34 shift/reduce conflicts.
+State 33 contains 34 shift/reduce conflicts.
+State 34 contains 34 shift/reduce conflicts.
+State 35 contains 34 shift/reduce conflicts.
+State 53 contains 34 shift/reduce conflicts.
+State 62 contains 34 shift/reduce conflicts.
+State 63 contains 34 shift/reduce conflicts.
+State 64 contains 34 shift/reduce conflicts.
+State 65 contains 34 shift/reduce conflicts.
+State 66 contains 34 shift/reduce conflicts.
+State 67 contains 34 shift/reduce conflicts.
+State 68 contains 34 shift/reduce conflicts.
+State 69 contains 34 shift/reduce conflicts.
+State 70 contains 34 shift/reduce conflicts.
+State 71 contains 34 shift/reduce conflicts.
+State 72 contains 34 shift/reduce conflicts.
+State 73 contains 34 shift/reduce conflicts.
+State 74 contains 34 shift/reduce conflicts.
+State 75 contains 34 shift/reduce conflicts.
+State 76 contains 34 shift/reduce conflicts.
+State 77 contains 34 shift/reduce conflicts.
+State 83 contains 34 shift/reduce conflicts.
+State 93 contains 34 shift/reduce conflicts.
+State 95 contains 34 shift/reduce conflicts.
+State 99 contains 34 shift/reduce conflicts.
+
+
+61 terminals, 6 nonterminals
+45 grammar rules, 100 states

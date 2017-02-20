@@ -1,0 +1,46 @@
+(* File: mp3.ml *)
+
+open Mp3common
+
+(* Problem 1 *)
+let rec import_list lst = match lst with
+    [] -> ConstExp NilConst
+    | (x, y)::tl -> BinOpAppExp(ConsOp, BinOpAppExp(CommaOp, ConstExp(IntConst x) , ConstExp(IntConst y)), import_list tl )
+
+(* Problem 2 *)
+let pair_sums = LetRecInExp("pair_sums" , "lst", 
+
+IfExp( BinOpAppExp(EqOp, VarExp "lst", ConstExp NilConst), ConstExp NilConst,
+LetInExp("x" , MonOpAppExp (HdOp ,(VarExp "lst")) , 
+BinOpAppExp(ConsOp,
+    (BinOpAppExp(IntPlusOp, (MonOpAppExp (FstOp, (VarExp "x"))), (MonOpAppExp (SndOp, (VarExp "x"))) )), 
+    (AppExp(VarExp "pair_sums", MonOpAppExp (TlOp ,(VarExp "lst")) ) ))
+
+) 
+
+)
+
+, AppExp(VarExp "pair_sums" ,import_list [(7,1);(4,2);(6,3)] ))
+
+
+
+(*   *)
+
+(* Problem 3 *)
+let rec count_const_in_exp exp =  match exp with
+    |VarExp s -> 0
+    |ConstExp a -> 1
+    |BinOpAppExp(b, e1, e2) -> (count_const_in_exp e1) + (count_const_in_exp e2)
+    |FunExp (x, e) -> count_const_in_exp e
+    |AppExp (e1,e2) -> (count_const_in_exp e1) + (count_const_in_exp e2)
+    |MonOpAppExp (m, e) -> (count_const_in_exp e)
+    |IfExp (e1, e2, e3) -> (count_const_in_exp e1) + (count_const_in_exp e2) + (count_const_in_exp e3)
+    |LetRecInExp (s, s1, e1, e2) ->  (count_const_in_exp e1) + (count_const_in_exp e2)
+    |LetInExp (s, e1, e2) ->  (count_const_in_exp e1) + (count_const_in_exp e2)
+
+(* Problem 4 *)
+let rec freeVarsInExp exp = raise (Failure "Not implemented yet")
+
+(* Problem 5 *)
+let rec cps_exp e k =  raise (Failure "Not implemented yet.")
+
